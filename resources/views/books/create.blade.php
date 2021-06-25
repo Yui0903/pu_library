@@ -18,11 +18,6 @@
                 @csrf
 
                 <div class="form-group">
-                    <label for="sid">分享者id:</label>
-                    <input type="text" class="form-control" name="sid" />
-                </div>
-
-                <div class="form-group">
                     <label for="title">圖書名稱:</label>
                     <input type="text" class="form-control" name="title" />
                 </div>

@@ -21,8 +21,13 @@ class Book extends Model
         'photo_path'
     ];
     //
-    public function student()
+    public function user()
     {
-        return $this->belongsTo('App\Models\Student');
+        return $this->belongsTo('App\Models\User');
+    }
+    //
+    public function voting()
+    {
+        return $this->hasMany('App\Models\Voting', 'bid', 'id');
     }
 }

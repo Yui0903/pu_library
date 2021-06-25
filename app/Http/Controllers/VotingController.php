@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Voting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class VotingController extends Controller
 {
@@ -47,12 +48,12 @@ class VotingController extends Controller
     {
         //
         $request->validate([
-            'sid' => 'required',
+            //'sid' => 'required',
             'bid' => 'required',
         ]);
 
         $voting = new Voting([
-            'sid' => $request->get('sid'),
+            //'sid' => $request->get('sid'),
             'bid' => $request->get('bid'),
             'voting_date' => now()
         ]);

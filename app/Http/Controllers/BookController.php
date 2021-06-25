@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
@@ -46,7 +47,7 @@ class BookController extends Controller
     {
         //
         $request->validate([
-            'sid' => 'required',
+            //'sid' => 'required',
             'title' => 'required',
             'author' => 'required',
             'publisher' => 'required',
@@ -64,8 +65,8 @@ class BookController extends Controller
         $image->move(public_path('images'), $new_name);
         // * 更新對應欄位
         $book = new Book([
-            'sid' => $request->get('sid'),
-            //'sid' => Auth::user()->id,
+            //'sid' => $request->get('sid'),
+            'sid' => Auth::user()->id,
             //
             'title' => $request->get('title'),
             'author' => $request->get('author'),

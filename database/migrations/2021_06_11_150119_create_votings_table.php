@@ -22,7 +22,7 @@ class CreateVotingsTable extends Migration
             //book id
             $table->bigInteger('bid')->unsigned();
             //設為外來鍵: 指定關聯性
-            $table->foreign('sid')->references('id')->on('students');
+            $table->foreign('sid')->references('id')->on('users');
             $table->foreign('bid')->references('id')->on('books');
             //預設值
             $table->dateTime('voting_date')->default(now());

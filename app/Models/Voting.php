@@ -15,8 +15,13 @@ class Voting extends Model
         'voting_date'
     ];
     //
-    public function student()
+    public function user()
     {
-        return $this->belongsTo('App\Models\Stdents');
+        return $this->belongsTo('App\Models\User');
+    }
+    //
+    public function book()
+    {
+        return $this->belongsTo('App\Models\Book');
     }
 }

@@ -20,7 +20,7 @@ class CreateBooksTable extends Migration
             //上傳者id
             $table->bigInteger('sid')->unsigned();
             //設定為外來鍵
-            $table->foreign('sid')->references('id')->on('students')->onDelete('cascade');
+            $table->foreign('sid')->references('id')->on('users')->onDelete('cascade');
             //
             $table->string('title', 128);
             $table->string('author', 32);

@@ -72,7 +72,6 @@
                         <form action="{{ route('votings.store') }}" method="post">
                             @csrf
                             <input type="hidden" name="bid" value="{{$book->id}}">
-                            <input type="hidden" name="sid" value="{{$book->sid}}">
                             <button class="btn btn-primary" onclick="return confirm('Are you sure?')" type="submit">票選</button>
                         </form>
                     </td>
