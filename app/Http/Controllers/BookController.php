@@ -125,8 +125,15 @@ class BookController extends Controller
      * @param  \App\Models\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Book $book)
+    public function destroy($id)
     {
         //
+        $book = Book::find($id);
+        if ($book) {
+            $book->delete();
+            return redirect('/books')->with('success', '圖書資料已成功刪除');
+        } else {
+            return redirect('/books')->with('fail', 'matched Book for deleting!');
+        }
     }
 }

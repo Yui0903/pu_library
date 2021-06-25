@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Voting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VotingController extends Controller
 {
@@ -15,6 +16,14 @@ class VotingController extends Controller
     public function index()
     {
         //
+        $votings = DB::table('votings')
+            ->join('books', 'votings.bid', '=', 'books.id')
+            ->join('students', 'votings.sid', '=', 'students.id')
+            ->select('votings.*', 'books.title', 'books.ISBN', 'books.author', 'books.publisher', 'students.name as username')
+            ->get();
+        //->paginator(6);
+        //
+        return view('votings.index', compact('votings'));
     }
 
     /**
@@ -25,6 +34,7 @@ class VotingController extends Controller
     public function create()
     {
         //
+        return redirect('/books')->with('fail', '無法處理投票');
     }
 
     /**
@@ -36,6 +46,23 @@ class VotingController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'sid' => 'required',
+            'bid' => 'required',
+        ]);
+
+        $voting = new Voting([
+            'sid' => $request->get('sid'),
+            'bid' => $request->get('bid'),
+            'voting_date' => now()
+        ]);
+
+        try {
+            $voting->save();
+            return redirect('/votings')->with('success', '投票紀錄已成功儲存');
+        } catch (\Exception $ex) {
+            return redirect('/books')->with('fail', '錯誤: ' . $ex->getMessage());
+        }
     }
 
     /**
@@ -44,9 +71,10 @@ class VotingController extends Controller
      * @param  \App\Models\Voting  $voting
      * @return \Illuminate\Http\Response
      */
-    public function show(Voting $voting)
+    public function show($id)
     {
         //
+        return redirect('/books')->with('fail', '無法處理');
     }
 
     /**
@@ -55,9 +83,10 @@ class VotingController extends Controller
      * @param  \App\Models\Voting  $voting
      * @return \Illuminate\Http\Response
      */
-    public function edit(Voting $voting)
+    public function edit($id)
     {
         //
+        return redirect('/books')->with('fail', '無法處理');
     }
 
     /**
@@ -67,7 +96,7 @@ class VotingController extends Controller
      * @param  \App\Models\Voting  $voting
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Voting $voting)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -78,8 +107,16 @@ class VotingController extends Controller
      * @param  \App\Models\Voting  $voting
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Voting $voting)
+    public function destroy($id)
     {
         //
+        $voting = Voting::find($id);
+        if ($voting) {
+            $voting->delete();
+            //
+            return redirect('/votings')->with('success', '票選資料已成功刪除');
+        } else {
+            return redirect('/votings')->with('fail', 'No matched Voting Data');
+        }
     }
 }
