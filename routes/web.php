@@ -17,9 +17,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('books', 'App\Http\Controllers\BookController')->middleware('auth');
-Route::resource('votings', 'App\Http\Controllers\VotingController')->middleware('auth');
-Route::resource('students', 'App\Http\Controllers\StudentController');
+Route::resource('books', 'App\Http\Controllers\BookController')
+    ->middleware('auth');
+Route::resource('votings', 'App\Http\Controllers\VotingController')
+    ->middleware('auth');
+//Route::resource('students', 'App\Http\Controllers\StudentController');
 
 Auth::routes();
 
